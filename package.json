@@ -1,0 +1,22 @@
+{
+  "name": "seleniumyoutubetest",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "tests:example": "npx ts-node tests.ts",
+    "tests:davi": "npx ts-node Davi/tests.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "selenium-webdriver": "^4.27.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "@types/selenium-webdriver": "^4.1.27",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}
