@@ -5,7 +5,7 @@
   "scripts": {
     "tests:example": "npx ts-node tests.ts",
     "tests:davi": "npx ts-node Davi/tests.ts",
-    "tests:daianae": "npx ts-node Daiane/tests.ts"
+    "tests:daiane": "npx ts-node Daiane/tests.ts"
   },
   "keywords": [],
   "author": "",
