@@ -4,7 +4,7 @@ import { loginGoogle } from '../utils';
 //import chrome from 'selenium-webdriver/chrome';
 //import path from 'path';
 
-async function testYouTube() {
+async function testComentariosYouTube() {
     let driver = await new Builder()
     .forBrowser('chrome')
     .setChromeOptions(new (require('selenium-webdriver/chrome').Options)().addArguments('--start-fullscreen'))
