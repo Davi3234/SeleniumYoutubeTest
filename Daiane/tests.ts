@@ -1,4 +1,5 @@
 import { Builder, By, Key, until, WebDriver } from 'selenium-webdriver';
+import { loginGoogle } from '../utils';
 //import chrome from 'selenium-webdriver/chrome';
 //import path from 'path';
 
@@ -13,7 +14,7 @@ async function testComentariosYouTube() {
 
         // Passo 2: Acessa a página de um vídeo
         await driver.sleep(4000);
-        await driver.get('https://www.youtube.com/watch?v=DQkQM_jEBRk'); // Substitua pela URL do vídeo de teste
+        await driver.get('https://www.youtube.com/watch?v=R2l8KU-QWRU'); // Substitua pela URL do vídeo de teste
         await driver.sleep(4000);
 
          // Passo 3: Se inscreve no canal
@@ -71,35 +72,6 @@ async function testComentariosYouTube() {
     } finally {
         await driver.quit();
     }
-}
-
-async function loginGoogle(driver: WebDriver) {
-    const loginButton = await driver.wait(
-        until.elementLocated(By.xpath('//*[@id="buttons"]/ytd-button-renderer/yt-button-shape/a')),
-        30000
-    );
-    await loginButton.click();
-
-    await driver.sleep(3000);
-    
-    const emailInput = await driver.wait(
-        until.elementLocated(By.xpath('//*[@id="identifierId"]')),
-        30000
-    );
-    await emailInput.click();
-    await driver.sleep(2000);
-
-    await emailInput.sendKeys('selenium.teste.udesc@gmail.com', Key.RETURN);
-    await driver.sleep(2000);
-
-    const passwordInput = await driver.wait(
-        until.elementLocated(By.xpath('//*[@id="password"]/div[1]/div/div[1]/input')),
-        30000
-    );
-    await passwordInput.click();
-    await driver.sleep(2000);
-
-    await passwordInput.sendKeys('testeselenium123', Key.RETURN);
 }
 
 testComentariosYouTube();
