@@ -1,35 +1,48 @@
+//npm run tests:daiane
 import { Builder, By, Key, until, WebDriver } from 'selenium-webdriver';
-//import chrome from 'selenium-webdriver/chrome';
-//import path from 'path';
 
-async function testComentariosYouTube() {
-    let driver = await new Builder().forBrowser('chrome').build();
+async function testYouTube() {
+    let driver = await new Builder()
+    .forBrowser('chrome')
+    .setChromeOptions(new (require('selenium-webdriver/chrome').Options)().addArguments('--start-fullscreen'))
+    .build();
 
     try {
-        // Passo 1: Usuário faz login no YouTube
+       
+        //Realiza Login
         await driver.get('https://www.youtube.com');
         await driver.sleep(3000);
         await loginGoogle(driver);
 
-        // Passo 2: Acessa a página de um vídeo
         await driver.sleep(4000);
-        await driver.get('https://www.youtube.com/watch?v=DQkQM_jEBRk'); // Substitua pela URL do vídeo de teste
+        await driver.get('https://www.youtube.com/watch?v=R2l8KU-QWRU'); // Substitua pela URL do vídeo de teste
         await driver.sleep(4000);
 
-         // Passo 3: Se inscreve no canal
+
+        //RF011: O sistema Youtube deve permitir que os usuários se inscrevam nos canais. 
         const subscribeButton = await driver.wait(
             until.elementLocated(By.id('subscribe-button')),
             10000
         );
         await subscribeButton.click();
-        console.log('Inscrito no canal.');
+        console.log('Inscrito no canal!');
 
-        // Passo 4: Pausa o vídeo
+        //RF012: O sistema Youtube deve permitir que os usuários pausem vídeos. 
+        await driver.sleep(10000);
         await driver.actions().sendKeys(Key.SPACE).perform();
         console.log('Pausou o vídeo.');
 
-        // Passo 5: Adiciona um comentário
-        const commentBox = await driver.wait(
+        //RF013: O sistema Youtube deve permitir que os usuários consigam passar para o próximo vídeo da fila enquanto estejam assistindo a algum vídeo. 
+        await driver.sleep(10000);
+        const nextButton = await driver.wait(
+            until.elementLocated(By.className('ytp-next-button ytp-button')),
+            10000
+        );
+        await nextButton.click();
+        console.log('Passou para o próximo vídeo!');
+
+         //RF001: O sistema Youtube deve permitir que os usuários comentem nos vídeos.
+         const commentBox = await driver.wait(
             until.elementLocated(By.xpath('//div[@id="placeholder-area"]')),
             20000
         );
@@ -39,7 +52,7 @@ async function testComentariosYouTube() {
             until.elementLocated(By.xpath('//div[@id="contenteditable-root"]')),
             30000
         );
-        const comentario = 'Novo teste de comentário';
+        const comentario = 'Teste com Selenium de comentário no YouTube';
         await driver.sleep(5000);
         await commentInput.sendKeys(comentario);
 
@@ -48,25 +61,14 @@ async function testComentariosYouTube() {
             10000
         );
         await submitButton.click();
+        console.log('Comentário adicionado!');
 
-        console.log('Comentário adicionado.');
-
-        // Verifica se o comentário foi publicado
         await driver.sleep(5000);
         const addedComment = await driver.wait(
-            until.elementLocated(By.xpath("//*[text()='Novo teste de comentário']")),
+            until.elementLocated(By.xpath("//*[text()='Teste com Selenium de comentário no YouTube']")),
             5000
         );
-        console.log('Comentário publicado com sucesso.');
-
-        // Passo 5: Passar para o próximo vídeo
-        await driver.sleep(10000);
-        const nextButton = await driver.wait(
-            until.elementLocated(By.className('ytp-next-button ytp-button')),
-            10000
-        );
-        await nextButton.click();
-        console.log('Passou para o próximo vídeo.');
+        console.log('Comentário publicado com sucesso!');
 
     } finally {
         await driver.quit();
@@ -102,4 +104,4 @@ async function loginGoogle(driver: WebDriver) {
     await passwordInput.sendKeys('testeselenium123', Key.RETURN);
 }
 
-testComentariosYouTube();
+testYouTube();
