@@ -1,5 +1,8 @@
 //npm run tests:daiane
 import { Builder, By, Key, until, WebDriver } from 'selenium-webdriver';
+import { loginGoogle } from '../utils';
+//import chrome from 'selenium-webdriver/chrome';
+//import path from 'path';
 
 async function testYouTube() {
     let driver = await new Builder()
@@ -75,33 +78,4 @@ async function testYouTube() {
     }
 }
 
-async function loginGoogle(driver: WebDriver) {
-    const loginButton = await driver.wait(
-        until.elementLocated(By.xpath('//*[@id="buttons"]/ytd-button-renderer/yt-button-shape/a')),
-        30000
-    );
-    await loginButton.click();
-
-    await driver.sleep(3000);
-    
-    const emailInput = await driver.wait(
-        until.elementLocated(By.xpath('//*[@id="identifierId"]')),
-        30000
-    );
-    await emailInput.click();
-    await driver.sleep(2000);
-
-    await emailInput.sendKeys('selenium.teste.udesc@gmail.com', Key.RETURN);
-    await driver.sleep(2000);
-
-    const passwordInput = await driver.wait(
-        until.elementLocated(By.xpath('//*[@id="password"]/div[1]/div/div[1]/input')),
-        30000
-    );
-    await passwordInput.click();
-    await driver.sleep(2000);
-
-    await passwordInput.sendKeys('testeselenium123', Key.RETURN);
-}
-
-testYouTube();
+testComentariosYouTube();

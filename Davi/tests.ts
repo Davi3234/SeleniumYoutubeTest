@@ -1,4 +1,5 @@
 import { Builder, By, Key, until, WebDriver } from 'selenium-webdriver';
+import { loginGoogle } from '../utils';
 
 async function testLoginGoogle() {
     let driver = await new Builder().forBrowser('chrome').build();
@@ -25,11 +26,15 @@ async function testLoginGoogle() {
 
 async function testAssistirMaisTarde(){
 
-    let driver = await new Builder().forBrowser('chrome').build();
+    let driver = await new Builder()
+    .forBrowser('chrome')
+    .setChromeOptions(new (require('selenium-webdriver/chrome').Options)().addArguments('--start-fullscreen'))
+    .build();
 
     try {
         await driver.get('https://www.youtube.com');
-        await driver.sleep(3000);
+
+        await driver.sleep(2000);
 
         await loginGoogle(driver);
 
@@ -44,16 +49,16 @@ async function testAssistirMaisTarde(){
 
         await driver.sleep(4000);
 
-        console.log('Procurando o botão...');
-
         const menuButton = await driver.wait(
-            until.elementLocated(By.xpath('//*[@id="button" and contains(@class, "yt-spec-button-shape-next")]')),
+            until.elementLocated(By.xpath('//*[@class="yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-button yt-spec-button-shape-next--enable-backdrop-filter-experiment" and @aria-label="Menu de ações"]')),
             10000
         );        
         
-        console.log('Botão encontrado, clicando...');
+        await driver.sleep(4000);
 
         await menuButton.click();
+
+        await driver.sleep(4000);
 
         const addButton = await driver.wait(
             until.elementLocated(By.xpath('//yt-formatted-string[text()="Adicionar vídeos"]')),
@@ -63,45 +68,148 @@ async function testAssistirMaisTarde(){
         await addButton.click();
 
         await driver.sleep(4000);
+        
+        await driver.actions().sendKeys(Key.TAB).perform();
+
+        await driver.sleep(4000);
+        
+        await driver.actions().sendKeys('Curso spring boot').perform();
+
+        await driver.sleep(4000);
+        
+        await driver.actions().sendKeys(Key.ENTER).perform();
+        
+        await driver.sleep(4000);
+        
+        await driver.actions().sendKeys(Key.ENTER).perform();
+        
+        await driver.sleep(4000);
+
+        await driver.actions().sendKeys(Key.TAB).perform();
+
+        await driver.actions().sendKeys(Key.TAB).perform();
+
+        await driver.sleep(4000);
+
+        await driver.actions().sendKeys(Key.ENTER).perform();
+
+        await driver.sleep(4000);
 
     } finally {
         await driver.quit();
     }
 }
 
-async function loginGoogle(driver: WebDriver){
-    const loginButton = await driver.wait(
-        until.elementLocated(By.xpath('//*[@id="buttons"]/ytd-button-renderer/yt-button-shape/a')),
-        10000
-    );
+async function testCriarPlaylist(){
 
-    await loginButton.click();
-    
-    await driver.sleep(3000);
+    let driver = await new Builder()
+    .forBrowser('chrome')
+    .setChromeOptions(new (require('selenium-webdriver/chrome').Options)().addArguments('--start-fullscreen'))
+    .build();
 
-    const emailInput = await driver.wait(
-        until.elementLocated(By.xpath('//*[@id="identifierId"]')),
-        10000
-    );
+    try {
+        await driver.get('https://www.youtube.com');
 
-    await emailInput.click();
+        await driver.sleep(2000);
 
-    await driver.sleep(2000);
+        await loginGoogle(driver);
 
-    await emailInput.sendKeys('teste.selenium.UDESC@gmail.com', Key.RETURN);
+        await driver.sleep(4000);
 
-    await driver.sleep(2000);
+        const voceButton = await driver.wait(
+            until.elementLocated(By.xpath('//*[@id="endpoint" and @href="/feed/you" and @title="Você"]')),
+            10000
+        );
 
-    const passwordInput = await driver.wait(
-        until.elementLocated(By.xpath('//*[@id="password"]/div[1]/div/div[1]/input')),
-        10000
-    );
+        await driver.sleep(3000);
 
-    await passwordInput.click();
+        await voceButton.click();
 
-    await driver.sleep(2000);
+        const addButton = await driver.wait(
+            until.elementLocated(By.xpath('//*[@id="top-level-buttons-computed"]/yt-flexible-actions-view-model/div[1]/button-view-model/button')),
+            10000
+        );
 
-    await passwordInput.sendKeys('TesteSelenium', Key.RETURN);
+        await driver.sleep(3000);
+
+        await addButton.click();
+
+        await driver.sleep(3000);
+
+        await driver.actions().sendKeys(Key.TAB).perform();
+
+        await driver.sleep(4000);
+
+        await driver.actions().sendKeys('Curso spring boot').perform();
+
+        await driver.sleep(4000);
+        
+        const salvarButton = await driver.wait(
+            until.elementLocated(By.xpath('/html/body/ytd-app/ytd-popup-container/tp-yt-paper-dialog/yt-dialog-view-model/dialog-layout/div[2]/div[2]/span/yt-form-footer-view-model/yt-panel-footer-view-model/div/div[2]/button-view-model/button')),
+            10000
+        );
+
+        await driver.sleep(4000);
+        
+        await salvarButton.click();
+        
+        await driver.sleep(4000);
+
+    } finally {
+        await driver.quit();
+    }
 }
 
-testAssistirMaisTarde();
+async function testRemoverPlaylist(){
+
+    let driver = await new Builder()
+    .forBrowser('chrome')
+    .setChromeOptions(new (require('selenium-webdriver/chrome').Options)().addArguments('--start-fullscreen'))
+    .build();
+
+    try {
+        await driver.get('https://www.youtube.com');
+
+        await driver.sleep(2000);
+
+        await loginGoogle(driver);
+
+        await driver.sleep(4000);
+
+        const playlistButton = await driver.wait(
+            until.elementLocated(By.xpath('//*[@id="endpoint" and @title="Playlists"]')),
+            10000
+        );
+
+        await driver.sleep(3000);
+
+        await playlistButton.click();
+
+        const infoButton = await driver.wait(
+            until.elementLocated(By.xpath('//*[@id="content"]/yt-lockup-view-model/div/div/yt-lockup-metadata-view-model/div[2]/button-view-model/button')),
+            10000
+        );
+
+        await driver.sleep(3000);
+
+        await infoButton.click();
+
+        await driver.sleep(3000);
+
+        await driver.actions().sendKeys(Key.TAB).perform();
+
+        await driver.sleep(4000);
+        
+        await driver.actions().sendKeys(Key.ENTER).perform();
+        
+        await driver.sleep(4000);
+
+    } finally {
+        await driver.quit();
+    }
+}
+
+// testLoginGoogle();
+// testAssistirMaisTarde();
+// testCriarPlaylist();
+testRemoverPlaylist();
