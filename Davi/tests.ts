@@ -12,6 +12,8 @@ async function testLoginGoogle() {
 
         await driver.sleep(4000);
 
+        console.log('Login com sucesso!');
+
         const searchBox = await driver.wait(
             until.elementLocated(By.xpath('//input[@id="search" and @name="search_query"]')),
             10000
@@ -45,6 +47,8 @@ async function testAssistirMaisTarde(){
             10000
         );
 
+        console.log('Clicando no botão de assistir mais tarde');
+
         await assistirButton.click();
 
         await driver.sleep(4000);
@@ -52,7 +56,9 @@ async function testAssistirMaisTarde(){
         const menuButton = await driver.wait(
             until.elementLocated(By.xpath('//*[@class="yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-button yt-spec-button-shape-next--enable-backdrop-filter-experiment" and @aria-label="Menu de ações"]')),
             10000
-        );        
+        );
+        
+        console.log('Abrindo o menu de inserção');
         
         await driver.sleep(4000);
 
@@ -65,11 +71,15 @@ async function testAssistirMaisTarde(){
             10000
         );
 
+        console.log('Clicando no botão de adicionar');
+
         await addButton.click();
 
         await driver.sleep(4000);
         
         await driver.actions().sendKeys(Key.TAB).perform();
+
+        console.log('Pesquisando vídeo para adicionar');
 
         await driver.sleep(4000);
         
@@ -88,6 +98,8 @@ async function testAssistirMaisTarde(){
         await driver.actions().sendKeys(Key.TAB).perform();
 
         await driver.actions().sendKeys(Key.TAB).perform();
+
+        console.log('Enviando');
 
         await driver.sleep(4000);
 
@@ -121,6 +133,8 @@ async function testCriarPlaylist(){
             10000
         );
 
+        console.log('Clicando em minhas playlists');
+
         await driver.sleep(3000);
 
         await voceButton.click();
@@ -130,6 +144,8 @@ async function testCriarPlaylist(){
             10000
         );
 
+        console.log('Adicionando playlist');
+
         await driver.sleep(3000);
 
         await addButton.click();
@@ -137,6 +153,8 @@ async function testCriarPlaylist(){
         await driver.sleep(3000);
 
         await driver.actions().sendKeys(Key.TAB).perform();
+
+        console.log('Inserindo nome da playlist');
 
         await driver.sleep(4000);
 
@@ -148,6 +166,8 @@ async function testCriarPlaylist(){
             until.elementLocated(By.xpath('/html/body/ytd-app/ytd-popup-container/tp-yt-paper-dialog/yt-dialog-view-model/dialog-layout/div[2]/div[2]/span/yt-form-footer-view-model/yt-panel-footer-view-model/div/div[2]/button-view-model/button')),
             10000
         );
+
+        console.log('Salvando playlist');
 
         await driver.sleep(4000);
         
@@ -181,6 +201,8 @@ async function testRemoverPlaylist(){
             10000
         );
 
+        console.log('Entrando nas playlists');
+
         await driver.sleep(3000);
 
         await playlistButton.click();
@@ -189,6 +211,8 @@ async function testRemoverPlaylist(){
             until.elementLocated(By.xpath('//*[@id="content"]/yt-lockup-view-model/div/div/yt-lockup-metadata-view-model/div[2]/button-view-model/button')),
             10000
         );
+
+        console.log('Abrindo ...');
 
         await driver.sleep(3000);
 
@@ -209,7 +233,17 @@ async function testRemoverPlaylist(){
     }
 }
 
-// testLoginGoogle();
-// testAssistirMaisTarde();
-// testCriarPlaylist();
-testRemoverPlaylist();
+switch(process.argv[2]){
+    case 'login':
+        testLoginGoogle();
+        break;
+    case 'addAssistir':
+        testAssistirMaisTarde();
+        break;
+    case 'addPlaylist':
+        testCriarPlaylist();
+        break;
+    case 'removePlaylist':
+        testRemoverPlaylist();
+        break;
+}
