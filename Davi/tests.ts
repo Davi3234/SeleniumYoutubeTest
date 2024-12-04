@@ -2,7 +2,10 @@ import { Builder, By, Key, until, WebDriver } from 'selenium-webdriver';
 import { loginGoogle } from '../utils';
 
 async function testLoginGoogle() {
-    let driver = await new Builder().forBrowser('chrome').build();
+    let driver = await new Builder()
+    .forBrowser('chrome')
+    .setChromeOptions(new (require('selenium-webdriver/chrome').Options)().addArguments('--start-fullscreen'))
+    .build();
 
     try {
         await driver.get('https://www.youtube.com');
