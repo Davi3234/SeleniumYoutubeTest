@@ -6,7 +6,8 @@
     "tests:example": "npx ts-node tests.ts",
     "tests:davi": "npx ts-node Davi/tests.ts",
     "tests:dan": "npx ts-node Danrley/tests.ts",
-    "tests:daiane": "npx ts-node Daiane/tests.ts"
+    "tests:daiane": "npx ts-node Daiane/tests.ts",
+    "tests:luana": "npx ts-node Luana/tests.ts"
   },
   "keywords": [],
   "author": "",
