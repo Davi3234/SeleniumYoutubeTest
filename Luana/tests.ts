@@ -30,6 +30,8 @@ async function testAssistirMaisTarde() {
         );
         console.log("Clicando menu tres pontinhos")
         await menu.click();
+
+        await driver.sleep(4000);
     
          // Localiza o botão "Remover de Assistir mais tarde"
          console.log("Localizando menu Remover de assistir mais tarde")
