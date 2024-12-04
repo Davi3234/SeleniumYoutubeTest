@@ -20,6 +20,8 @@ async function testRegisterListTask() {
 
         await driver.sleep(TIME_DELAY_NEXT_STEP)
 
+        console.log('Acessando tela de cadastro de lista de tarefas')
+
         const createListButton = await driver.wait(
             until.elementLocated(By.xpath(`//*[contains(text(),'Criar Lista')]`)),
             TIMEOUT_ELEMENT_LOCATED
@@ -29,6 +31,8 @@ async function testRegisterListTask() {
 
         await driver.sleep(TIME_DELAY_NEXT_STEP)
 
+        console.log('Informando o nome')
+
         const nameListField = await driver.wait(
             until.elementLocated(By.xpath(`//input[@name='name']`)),
             TIMEOUT_ELEMENT_LOCATED
@@ -37,6 +41,8 @@ async function testRegisterListTask() {
         await nameListField.sendKeys('Planos de Teste')
 
         await driver.sleep(TIME_DELAY_NEXT_STEP)
+
+        console.log('Confirmando envio do formulário')
 
         const saveListButton = await driver.wait(
             until.elementLocated(By.xpath(`//*[contains(text(),'Salvar')]`)),
@@ -66,21 +72,25 @@ async function testRegisterTask() {
 
         await driver.sleep(TIME_DELAY_NEXT_STEP)
 
+        console.log('Acessando tela de listagem de tarefas')
+
         const task = await driver.wait(
             until.elementLocated(By.xpath('//li[@role="listitem" and .//i[@data-icon-name="Edit"]][1]')),
             TIMEOUT_ELEMENT_LOCATED
         )
 
-        await driver.sleep(TIME_DELAY_NEXT_STEP)
-
         await task.click()
 
         await driver.sleep(TIME_DELAY_NEXT_STEP)
+
+        console.log('Informando o título da tarefa')
 
         const loginField = await driver.wait(
             until.elementLocated(By.xpath(`//input[@name='title']`)),
             TIMEOUT_ELEMENT_LOCATED
         )
+
+        console.log('Pressionando o Enter')
 
         await loginField.sendKeys('Fazer o trabalho de Plano de Testes', Key.RETURN)
 
@@ -167,6 +177,8 @@ async function testConfigTask() {
 }
 
 async function efetuarLogin(driver: WebDriver) {
+    console.log('Acessando tela de login')
+
     const loginPageButton = await driver.wait(
         until.elementLocated(By.xpath(`//a[@href='/login']`)),
         TIMEOUT_ELEMENT_LOCATED
@@ -175,6 +187,8 @@ async function efetuarLogin(driver: WebDriver) {
     await loginPageButton.click()
 
     await driver.sleep(TIME_DELAY_NEXT_STEP)
+
+    console.log('Informando o email')
 
     const loginField = await driver.wait(
         until.elementLocated(By.xpath(`//input[@name='email']`)),
@@ -185,6 +199,8 @@ async function efetuarLogin(driver: WebDriver) {
 
     await driver.sleep(TIME_DELAY_NEXT_STEP)
 
+    console.log('Informando a senha')
+
     const passwordField = await driver.wait(
         until.elementLocated(By.xpath(`//input[@name='password']`)),
         TIMEOUT_ELEMENT_LOCATED
@@ -193,6 +209,8 @@ async function efetuarLogin(driver: WebDriver) {
     await passwordField.sendKeys(process.env.AUTH_PASSWORD || '')
 
     await driver.sleep(TIME_DELAY_NEXT_STEP)
+
+    console.log('Confirmando envio de formulário')
 
     const loginButton = await driver.wait(
         until.elementLocated(By.xpath(`//button[contains(@class, 'ms-Button--primary')]`)),
@@ -204,6 +222,6 @@ async function efetuarLogin(driver: WebDriver) {
     await driver.sleep(TIME_MILLISECONDS * 5)
 }
 
-// testRegisterListTask()
+testRegisterListTask()
 // testRegisterTask()
-testConfigTask()
+// testConfigTask()
