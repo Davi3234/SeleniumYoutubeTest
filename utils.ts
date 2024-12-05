@@ -1,4 +1,5 @@
 import { By, Key, until, WebDriver } from "selenium-webdriver";
+import { ENV } from "./environment";
 
 export async function loginGoogle(driver: WebDriver) {
     
@@ -26,7 +27,7 @@ export async function loginGoogle(driver: WebDriver) {
 
   await driver.sleep(2000);
 
-  await emailInput.sendKeys("teste.selenium.UDESC@gmail.com", Key.RETURN);
+  await emailInput.sendKeys(ENV.AUTH_EMAIL, Key.RETURN);
 
   console.log('Setando campo de email');
 
@@ -45,5 +46,5 @@ export async function loginGoogle(driver: WebDriver) {
 
   await driver.sleep(2000);
 
-  await passwordInput.sendKeys("TesteSelenium", Key.RETURN);
+  await passwordInput.sendKeys(ENV.AUTH_PASSWORD, Key.RETURN);
 }

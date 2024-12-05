@@ -1,5 +1,6 @@
 import { Builder, By, Key, until, WebDriver } from 'selenium-webdriver'
 import 'dotenv/config'
+import { ENV } from '../environment'
 
 const BASE_URL = 'https://klist.app'
 const TIME_MILLISECONDS = 1_000
@@ -158,7 +159,7 @@ async function testConfigTask() {
             TIMEOUT_ELEMENT_LOCATED
         )
 
-        await subtaskField.sendKeys(process.env.AUTH_EMAIL || '', Key.RETURN)
+        await subtaskField.sendKeys(ENV.AUTH_EMAIL || '', Key.RETURN)
 
         await driver.sleep(TIME_DELAY_NEXT_STEP)
 
@@ -195,7 +196,7 @@ async function efetuarLogin(driver: WebDriver) {
         TIMEOUT_ELEMENT_LOCATED
     )
 
-    await loginField.sendKeys(process.env.AUTH_EMAIL || '', Key.RETURN)
+    await loginField.sendKeys(ENV.AUTH_EMAIL || '', Key.RETURN)
 
     await driver.sleep(TIME_DELAY_NEXT_STEP)
 
@@ -206,7 +207,7 @@ async function efetuarLogin(driver: WebDriver) {
         TIMEOUT_ELEMENT_LOCATED
     )
 
-    await passwordField.sendKeys(process.env.AUTH_PASSWORD || '')
+    await passwordField.sendKeys(ENV.AUTH_PASSWORD || '')
 
     await driver.sleep(TIME_DELAY_NEXT_STEP)
 
